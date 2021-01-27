@@ -6,5 +6,8 @@
   "settings": {
     "terminal.integrated.shell.linux": "/bin/bash"
   },
-  "extensions": [],
+  "extensions": [
+	"ms-vscode.cmake-tools",
+	"ms-vscode.cpptools"
+],
 }
