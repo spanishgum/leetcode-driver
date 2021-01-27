@@ -6,4 +6,5 @@
   "[json]": {
     "editor.defaultFormatter": "vscode.json-language-features"
   },
+  "C_Cpp.clang_format_path": "/clang_10.0.0/bin/clang-format"
 }
