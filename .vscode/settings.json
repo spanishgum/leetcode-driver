@@ -1,13 +1,13 @@
-{
-  "editor.tabSize": 2,
-  "editor.insertSpaces": true,
-  "editor.detectIndentation": false,
-  "editor.formatOnSave": true,
-  "[json]": {
-    "editor.defaultFormatter": "vscode.json-language-features"
-  },
-  "C_Cpp.clang_format_path": "/usr/lib/llvm-10/bin/clang-format",
-  "C_Cpp.default.includePath": [
-    "~/.conan/data/**"
-  ],
-}
+    {
+      "editor.tabSize": 2,
+      "editor.insertSpaces": true,
+      "editor.detectIndentation": false,
+      "editor.formatOnSave": true,
+      "[json]": {
+        "editor.defaultFormatter": "vscode.json-language-features"
+      },
+      "C_Cpp.clang_format_path": "/usr/lib/llvm-10/bin/clang-format",
+      "C_Cpp.default.includePath": [
+        "~/.conan/data/**"
+      ],
+    }
