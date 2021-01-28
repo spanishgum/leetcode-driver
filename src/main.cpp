@@ -1,8 +1,6 @@
-#include <iostream>
-
-using namespace std;
+#include "spdlog/spdlog.h"
 
 int main() {
-    cout << "hello!" << endl;
+    spdlog::info("Welcome to spdlog!");
     return 0;
 }
