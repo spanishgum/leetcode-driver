@@ -1,12 +1,6 @@
-//#include "spdlog/spdlog.h"
-#include <iostream>
-#include <string>
-
-using namespace std;
+#include "questions/example/solution.hpp"
 
 int main() {
-    string s = "hello!";
-    cout << s << endl;
-    // spdlog::info("Welcome to spdlog!");
+    Solution s;
     return 0;
 }
