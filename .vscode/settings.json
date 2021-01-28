@@ -9,6 +9,6 @@
       "C_Cpp.clang_format_path": "/usr/lib/llvm-10/bin/clang-format",
       "C_Cpp.default.includePath": [
         "~/.conan/data/**",
-        "${workspaceFolder}/src/includes/**",
+        "${workspaceFolder}/src/**",
       ],
     }
