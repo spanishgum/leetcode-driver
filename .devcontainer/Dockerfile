@@ -1,27 +1,17 @@
 FROM ubuntu:18.04
 
-RUN apt-get update && apt-get install -y \
-  git \
-  xz-utils \
-  build-essential \
-  curl \
-  libssl-dev \
-  && rm -rf /var/lib/apt/lists/* \
-  && curl -SL https://github.com/llvm/llvm-project/releases/download/llvmorg-10.0.0/clang+llvm-10.0.0-x86_64-linux-gnu-ubuntu-18.04.tar.xz \
-  | tar -xJC . && \
-  mv clang+llvm-10.0.0-x86_64-linux-gnu-ubuntu-18.04 clang_10.0.0 && \
-  echo 'export PATH=/clang_10.0.0/bin:$PATH' >> ~/.bashrc && \
-  echo 'export LD_LIBRARY_PATH=/clang_10.0.0/lib:$LD_LIBRARY_PATH' >> ~/.bashrc
+RUN apt-get update -y && apt-get install -y git wget software-properties-common
 
+RUN wget https://apt.llvm.org/llvm.sh \
+  && chmod +x llvm.sh
+  && ./llvm.sh 10
 
-RUN curl -L -O -J https://github.com/Kitware/CMake/releases/download/v3.19.3/cmake-3.19.3.tar.gz \
-  && tar xf cmake-3.19.3.tar.gz \
-  && cd cmake-3.19.3 \
-  && ./bootstrap -- -DCMAKE_BUILD_TYPE:STRING=Release \
-  && make \
-  && make install \
-  && cd .. \
-  && rm -rf cmake-3.19.3 cmake-3.19.3.tar.gz
+RUN wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null \
+  | gpg --dearmor - \
+  | tee /etc/apt/trusted.gpg.d/kitware.gpg >/dev/null \
+  && apt-add-repository 'deb https://apt.kitware.com/ubuntu/ bionic main' \
+  && apt-get update -y \
+   && DEBIAN_FRONTEND=noninteractive apt-get install -y cmake
 
 # Start from a Bash prompt
 CMD [ "/bin/bash" ]
