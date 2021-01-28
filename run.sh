@@ -1,3 +1,3 @@
 #!/bin/sh
 
-./bin/leet
+./dist/bin/leet
