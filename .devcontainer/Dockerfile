@@ -1,9 +1,9 @@
-FROM ubuntu:18.04
+FROM ubuntu:20.04
 
 RUN apt-get update -y && apt-get install -y git wget software-properties-common
 
 RUN wget https://apt.llvm.org/llvm.sh \
-  && chmod +x llvm.sh
+  && chmod +x llvm.sh \
   && ./llvm.sh 10
 
 RUN wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null \
