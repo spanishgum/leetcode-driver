@@ -3,6 +3,7 @@
       "editor.insertSpaces": true,
       "editor.detectIndentation": false,
       "editor.formatOnSave": true,
+      "editor.wordWrap": "on",
       "[json]": {
         "editor.defaultFormatter": "vscode.json-language-features"
       },
