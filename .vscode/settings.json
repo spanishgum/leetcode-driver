@@ -1,17 +1,17 @@
-    {
-      "editor.tabSize": 2,
-      "editor.insertSpaces": true,
-      "editor.detectIndentation": false,
-      "editor.formatOnSave": true,
-      "editor.wordWrap": "on",
-      "[json]": {
+{
+    "editor.tabSize": 4,
+    "editor.insertSpaces": true,
+    "editor.detectIndentation": false,
+    "editor.formatOnSave": true,
+    "editor.wordWrap": "on",
+    "[json]": {
         "editor.defaultFormatter": "vscode.json-language-features"
-      },
-      "C_Cpp.clang_format_path": "/usr/lib/llvm-10/bin/clang-format",
-      "C_Cpp.default.includePath": [
+    },
+    "C_Cpp.clang_format_path": "/usr/lib/llvm-10/bin/clang-format",
+    "C_Cpp.default.includePath": [
         "~/.conan/data/**",
         "${workspaceFolder}/src/**",
-      ],
-      "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools",
-      "C_Cpp.default.cppStandard": "c++17",
-    }
+    ],
+    "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools",
+    "C_Cpp.default.cppStandard": "c++17",
+}
