@@ -12,4 +12,6 @@
         "~/.conan/data/**",
         "${workspaceFolder}/src/**",
       ],
+      "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools",
+      "C_Cpp.default.cppStandard": "c++17",
     }

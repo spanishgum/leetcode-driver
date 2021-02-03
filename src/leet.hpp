@@ -1,3 +1,4 @@
-#include "details/catch2_wrapper.hpp"
+#include "details/expect.hpp"
+#include "details/inputs.hpp"
+#include "details/log.hpp"
 #include "details/std_includes.hpp"
-#include "details/testing/inputs.hpp"

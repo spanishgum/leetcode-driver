@@ -1,6 +1,3 @@
 #include "questions/example/solution.hpp"
 
-int main() {
-    Solution s;
-    return 0;
-}
+int main() { Solution::test(); }
