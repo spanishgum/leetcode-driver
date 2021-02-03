@@ -1,17 +1,19 @@
 #include <experimental/filesystem>
+#include <fstream>
 #include <string>
 #include <vector>
 
 namespace leet {
 
 template <typename PathType>
-ifstream load_stream(PathType &&path) {
-    std::ifstream
+std::ifstream load_stream(PathType &&path) {
+    std::ifstream ifs{path.c_str()};
+    return ifs;
 }
 
-template <typename T>
-std::vector<T> read_vector(std::string path) {
-    vector<T> ans;
+template <typename T, typename PathType>
+std::vector<T> read_vector(PathType &&path) {
+    std::vector<T> ans;
     return ans;
 }
 
