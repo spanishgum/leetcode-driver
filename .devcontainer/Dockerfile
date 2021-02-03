@@ -1,7 +1,7 @@
-FROM ubuntu:20.04
+FROM ubuntu:18.04
 
 RUN apt-get update -y \
-  && DEBIAN_FRONTEND=noninteractive apt-get install -y git wget software-properties-common
+  && DEBIAN_FRONTEND=noninteractive apt-get install -y git wget software-properties-common libssl-dev libssl1.0.0
 
 RUN wget https://apt.llvm.org/llvm.sh \
   && chmod +x llvm.sh \
