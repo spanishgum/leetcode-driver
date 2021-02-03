@@ -1,4 +1,8 @@
 cmake_minimum_required(VERSION 3.19.3)
+
+set(CMAKE_CC_COMPILER "/usr/lib/llvm-10/bin/clang")
+set(CMAKE_CXX_COMPILER "/usr/lib/llvm-10/bin/clang++")
+
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
