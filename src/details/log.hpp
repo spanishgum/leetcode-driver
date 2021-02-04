@@ -1,12 +1,63 @@
+#ifndef LEET_LOG
+#define LEET_LOG
+
 #include <iostream>
 
 namespace leet {
-using stream_type = std::ostream;
+namespace color {
 
-template <typename Arg, typename... Args>
-void log(Arg &&arg, Args &&... args) {
-    std::cout << std::forward<Arg>(arg);
-    ((std::cout << std::forward<Args>(args)), ...);
+enum class Color {
+    red,
+    green,
+};
+
+template <Color c>
+struct ColorSpec {};
+
+template <>
+struct ColorSpec<Color::red> {
+    static constexpr const char *const value = "0;31";
+};
+
+template <>
+struct ColorSpec<Color::green> {
+    static constexpr const char *const value = "0;32";
+};
+
+template <typename Printable, typename Derived>
+struct ColorWrapper {
+    const Printable &data;
+
+    ColorWrapper(const Printable &p) : data(p) {}
+    ~ColorWrapper() = default;
+
+    friend std::ostream &operator<<(std::ostream &os, const Derived &p) {
+        os << "\033[" << Derived::color_spec::value << "m" << p.data
+           << "\033[0m";
+        return os;
+    }
+};
+
+template <typename Printable>
+struct Red : ColorWrapper<Printable, Red<Printable>> {
+    using color_spec = ColorSpec<Color::red>;
+    Red(const Printable &p) : ColorWrapper<Printable, Red<Printable>>(p) {}
+};
+
+template <typename Printable>
+struct Green : ColorWrapper<Printable, Green<Printable>> {
+    using color_spec = ColorSpec<Color::green>;
+    Green(const Printable &p) : ColorWrapper<Printable, Green<Printable>>(p) {}
+};
+
+} // namespace color
+
+template <typename... Args>
+void log(Args &&... args) {
+    (std::cout << ... << std::forward<Args>(args));
+    std::cout << std::endl;
 }
 
 } // namespace leet
+
+#endif

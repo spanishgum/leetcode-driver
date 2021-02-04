@@ -1,3 +1,6 @@
+#ifndef LEET_INPUTS
+#define LEET_INPUTS
+
 #include <filesystem>
 #include <fstream>
 #include <string>
@@ -18,3 +21,5 @@ std::vector<T> read_vector(PathType &&path) {
 }
 
 } // namespace leet
+
+#endif

@@ -1,3 +1,6 @@
+#ifndef LEET_STD_INCLUDES
+#define LEET_STD_INCLUDES
+
 // Utilities
 #include <any>
 #include <bitset>
@@ -74,3 +77,5 @@
 #include <thread>
 
 using namespace std;
+
+#endif
