@@ -9,6 +9,7 @@ namespace color {
 enum class Color {
     red,
     green,
+    yellow,
 };
 
 template <Color c>
@@ -22,6 +23,11 @@ struct ColorSpec<Color::red> {
 template <>
 struct ColorSpec<Color::green> {
     static constexpr const char *const value = "0;32";
+};
+
+template <>
+struct ColorSpec<Color::yellow> {
+    static constexpr const char *const value = "0;33";
 };
 
 template <typename Printable, typename Derived>
@@ -48,6 +54,13 @@ template <typename Printable>
 struct Green : ColorWrapper<Printable, Green<Printable>> {
     using color_spec = ColorSpec<Color::green>;
     Green(const Printable &p) : ColorWrapper<Printable, Green<Printable>>(p) {}
+};
+
+template <typename Printable>
+struct Yellow : ColorWrapper<Printable, Yellow<Printable>> {
+    using color_spec = ColorSpec<Color::yellow>;
+    Yellow(const Printable &p)
+        : ColorWrapper<Printable, Yellow<Printable>>(p) {}
 };
 
 } // namespace color

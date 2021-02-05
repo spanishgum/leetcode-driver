@@ -6,77 +6,93 @@
 #include <string>
 #include <vector>
 
+#include <tao/pegtl.hpp>
+namespace pegtl = tao::pegtl;
+
+#include "details/error.hpp"
+#include "details/log.hpp"
+
 namespace leet {
 
-struct FileStreamException : public std::exception {
-    std::string path;
+namespace parse {
 
-    template <typename PathType>
-    FileStreamException(const PathType &p) : path(p.string()) {}
+struct open_bracket : pegtl::one<'['> {};
+struct close_bracket : pegtl::one<']'> {};
+struct comma : pegtl::one<','> {};
+struct number : pegtl::plus<pegtl::digit> {};
+struct padded_number : pegtl::pad<number, pegtl::blank> {};
+struct number_list : pegtl::seq<pegtl::star<pegtl::list<padded_number, comma>>,
+                                pegtl::star<number>> {};
 
-    const char *what() const throw() { return this->path.c_str(); }
+} // namespace parse
+
+namespace vector_parser {
+
+struct grammar : pegtl::must<parse::open_bracket, parse::number_list,
+                             parse::close_bracket> {};
+
+template <typename Rule>
+struct action {};
+
+template <>
+struct action<parse::open_bracket> {
+    template <typename ParseInput>
+    static void apply(const ParseInput &in, std::vector<int> &v) {
+        // log(color::Yellow("Found opening bracket"));
+    }
 };
 
-struct BadInputException : public std::exception {
-    const char *what() const throw() { return "Bad input"; }
+template <>
+struct action<parse::comma> {
+    template <typename ParseInput>
+    static void apply(const ParseInput &in, std::vector<int> &v) {
+        // log(color::Yellow("Found comma"));
+    }
 };
+
+template <>
+struct action<parse::padded_number> {
+    template <typename ParseInput>
+    static void apply(const ParseInput &in, std::vector<int> &v) {
+        // log(color::Yellow("Found (maybe padded) number"));
+    }
+};
+
+template <>
+struct action<parse::number> {
+    template <typename ParseInput>
+    static void apply(const ParseInput &in, std::vector<int> &v) {
+        auto n = in.string();
+        // log(color::Yellow("Parsing number: "), n);
+        v.emplace_back(std::stoi(n));
+    }
+};
+
+template <>
+struct action<parse::close_bracket> {
+    template <typename ParseInput>
+    static void apply(const ParseInput &in, std::vector<int> &v) {
+        // log(color::Yellow("Found closing bracket"));
+    }
+};
+
+} // namespace vector_parser
 
 template <typename PathType>
-std::ifstream load_stream(PathType &&path) {
-    const std::string base_dir =
-        std::filesystem::path{"../src/questions/example/inputs"};
-    const std::filesystem::path p{std::forward<PathType>(path)};
-    auto full_path = base_dir / p;
-    std::ifstream ifs{full_path.c_str()};
+std::ifstream load_input(PathType &&path) {
+    std::ifstream ifs{std::filesystem::path{"../src/"} / path};
     if (!ifs) {
-        throw FileStreamException(full_path);
+        throw FileStreamException(path);
     }
     return ifs;
-}
-
-template <typename T, typename Stream>
-std::vector<T> read_vector_impl(Stream &ifs) {
-    std::vector<T> ans;
-
-    // open the array
-    if (ifs.peek() == '[') {
-        ifs.get();
-    } else {
-        throw BadInputException();
-    }
-
-    // start parsing
-    T element;
-    // make sure stream is good
-    while (ifs) {
-        auto next = ifs.peek();
-        // check for end of input, or delimiter
-        // anything else is bad input
-        if (next == ']') {
-            break;
-        } else if (next == ',') {
-            ifs.get();
-        } else {
-            throw BadInputException();
-        }
-
-        // expect T to be readable
-        // anything else is bad input
-        if (ifs >> element) {
-            ans.push_back(element);
-        } else {
-            throw BadInputException();
-        }
-    }
-
-    return ans;
 }
 
 template <typename T, typename PathType>
 std::vector<T> read_vector(PathType &&path) {
     std::vector<T> ans;
-    auto ifs = load_stream(std::forward<PathType>(path));
-    ans = std::move(read_vector_impl<T>(ifs));
+    auto ifs = load_input(std::forward<PathType>(path));
+    auto in = pegtl::istream_input(ifs, 4096, std::forward<PathType>(path));
+    pegtl::parse<vector_parser::grammar, vector_parser::action>(in, ans);
     return ans;
 }
 
