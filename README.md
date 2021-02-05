@@ -29,3 +29,36 @@ make
 ```
 
 Then run with `./leet`!
+
+
+## Usage
+
+To leet, look at `src/questions/example`.
+
+The idea is that you use the typicaly leetcode structure but with my include:
+
+```c++
+#include "leet.hpp"
+
+class Solution {
+  public:
+    int array_sum(const vector<int> &nums) {
+        return accumulate(nums.cbegin(), nums.cend(), 0);
+    }
+};
+```
+
+To "drive" each problem, you will have to change `src/main.cpp`. Literally all it does is this:
+
+```c++
+#include "questions/example/solution.hpp"
+
+int main() { Solution::test(); }
+```
+
+Just change the include to your solution.
+
+
+For this to work though, obviously you need `Solution::test()`.
+
+This can do whatever you want. I've provided `leet::test(...)` and `leet::expect(...)`, but these are experimental. I'm still in the tinkering phase.
